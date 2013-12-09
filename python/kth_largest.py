@@ -1,7 +1,13 @@
 
 import pprint
+from random import shuffle
 
-a = [1,2,5,453,23,23,56,6,34,3,65,56,3,34,76,5,34,234,4,78,8,4,3,3,6,7]
+def main():
+    a = [1,2,5,453,23,23,56,6,34,3,65,56,3,34,76,5,34,234,4,78,8,4,3,3,6,7]
+    b = range(20)
+    shuffle(b)
+    print kth_smallest_3(b, 5)
+
 
 def kth_largest(a, k):
 # O(n log k)
@@ -33,7 +39,7 @@ def kth_largest(a, k):
     print largest
     print sorted(a, reverse=True)
     return largest[-1]
-kth_largest(a, 5)
+#kth_largest(a, 5)
 
 def kth_largest_2(a, k):
     # int values between 0 and N
@@ -48,4 +54,25 @@ def kth_largest_2(a, k):
         if kth >= k:
             return N-i
 
-print kth_largest_2(a, 5)
+#print kth_largest_2(a, 5)
+
+def kth_smallest_3(a, k):
+    splitter = a.pop(len(a)/2)
+    smaller = []
+    larger = []
+    for e in a:
+        if e < splitter:
+            smaller.append(e)
+        else:
+            larger.append(e)
+    r = len(smaller)+1
+    if r == k:
+        return splitter
+    elif r < k:
+        k = k - r
+        return kth_smallest_3(larger, k)
+    else:
+        return kth_smallest_3(smaller, k)
+
+if __name__ == '__main__':
+    main()
